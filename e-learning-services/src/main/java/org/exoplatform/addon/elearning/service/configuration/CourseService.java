@@ -1,9 +1,13 @@
 package org.exoplatform.addon.elearning.service.configuration;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
+import org.exoplatform.addon.elearning.integration.notification.AddCoursePlugin;
 import org.exoplatform.addon.elearning.storage.CourseDao;
 import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.mapper.CourseMapper;
+import org.exoplatform.commons.api.notification.NotificationContext;
+import org.exoplatform.commons.api.notification.model.PluginKey;
 import org.exoplatform.commons.api.persistence.ExoTransactional;
+import org.exoplatform.commons.notification.impl.NotificationContextImpl;
 import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -41,6 +45,9 @@ public class CourseService {
     try {
 
       cours = courseDao.create(courseMapper.courseDTOToCourse(coursDTO));
+      // Send Notification
+      NotificationContext ctx = NotificationContextImpl.cloneInstance().append(AddCoursePlugin.COURSE, coursDTO);
+      ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(AddCoursePlugin.ID))).execute(ctx);
 
 
     } catch (Exception e) {

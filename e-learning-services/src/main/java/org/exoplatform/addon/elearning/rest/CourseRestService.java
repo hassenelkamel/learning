@@ -175,6 +175,8 @@ import org.exoplatform.social.core.manager.IdentityManager;
     @Path("/add")
     public Response add(CourseDTO coursDTO) {
       try{
+
+          coursDTO.setUserName(getCurrentUser());
           coursDTO = courseService.addCours(coursDTO);
 
           return Response.ok().entity(coursDTO).build();
@@ -203,6 +205,13 @@ import org.exoplatform.social.core.manager.IdentityManager;
                        .build();
       }
 
+    }
+    String getCurrentUser () {
+      org.exoplatform.services.security.Identity currentIdentity = ConversationState.getCurrent().getIdentity();
+      if(currentIdentity != null){
+        return currentIdentity.getUserId();
+      }
+      return null;
     }
 
   }

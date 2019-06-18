@@ -17,6 +17,7 @@
   <modules>
     <module>e-learning-services</module>
     <module>e-learning-webapps</module>
+    <module>extension</module>
     <module>e-learning-packaging</module>
   </modules>
   <scm>
