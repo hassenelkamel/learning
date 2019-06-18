@@ -1,11 +1,13 @@
 <template>
     <v-container grid-list-md text-xs-center class="my-5" elevation-10>
+
         <v-layout>
             <v-flex md12>
                 <app-edit-cours-tab />
             </v-flex>
         </v-layout>
         <v-layout>
+
             <div class="tmp mt-2">
                 <v-card>
                     <v-card-text>{{time}}</v-card-text>
@@ -18,6 +20,9 @@
                 </v-card>
             </div>
         </v-layout>
+        <div v-if="alt" class="alert alert-info">
+            <i class="uiIconInfo"></i>L'examen n'est pas disponible
+        </div>
         <div class="cardTemp" v-for="(c,index) in questions" :key="c.idExercise" >
             <v-card >
                 <v-card-title>
@@ -80,6 +85,7 @@
         },
         data () {
             return {
+                alt:false,
                 users:[],
                 counter:0,
                 note:0,
@@ -108,6 +114,9 @@
             }, 1000);
             axios.get(`/portal/rest/exercise/getExercisesByIdExam/` + this.idE).then((response) => {
                 this.questions = response.data;
+                if(this.questions.length===0){
+                    this.alt=true;
+                }
             }).catch(error => {
             })
             axios.get(`/portal/rest/worker/getidWorkerByname/`+ eXo.env.portal.userName)

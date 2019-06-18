@@ -1,7 +1,7 @@
 <template>
     <v-card
       class="mb-5"
-      height="600px">
+      height="750px">
       <v-card-text>
         <v-form ref="form" class="px-3">
             <div>
@@ -35,45 +35,44 @@
                   </option>
                 </select>
               </v-flex>
+                <v-dialog v-model="dialogs" width="600px">
+                    <v-btn
+                            slot="activator"
+                            fab
+                            dark
+                            color="#578dc9"
+                            small>
+                        <v-icon dark>add</v-icon>
+                    </v-btn>
+                    <v-card>
+                        <v-card-title>
+                            <h4>Add New Category</h4>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-form ref="form" class="px-3">
+                                <v-text-field
+                                        v-model="nameCategory"
+                                        label="libellé Categorie"
+                                        prepend-icon="folder"
+                                        :rules="inputRules" />
+                                <v-spacer />
+                                <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        @click="saveCategory">
+                                    Ajouter
+                                </button>
+                                <button
+                                        class="btn"
+                                        @click="cancel">
+                                    Quitter
+                                </button>
+                            </v-form>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
             </v-layout>
-              <!-- pop up -->
-              <v-dialog v-model="dialogs" width="600px">
-                  <v-btn
-                          slot="activator"
-                          fab
-                          dark
-                          color="#578dc9"
-                          small>
-                      <v-icon dark>add</v-icon>
-                  </v-btn>
-                  <v-card>
-                      <v-card-title>
-                          <h4>Add New Category</h4>
-                      </v-card-title>
-                      <v-card-text>
-                          <v-form ref="form" class="px-3">
-                                  <v-text-field
-                                          v-model="nameCategory"
-                                          label="libellé Categorie"
-                                          prepend-icon="folder"
-                                          :rules="inputRules" />
-                                  <v-spacer />
-                                  <button
-                                          type="button"
-                                          class="btn btn-primary"
-                                  @click="saveCategory">
-                                      Ajouter
-                                  </button>
-                                  <button
-                                          class="btn"
-                                  @click="cancel">
-                                      Quitter
-                                  </button>
-                          </v-form>
-                      </v-card-text>
-                  </v-card>
-              </v-dialog>
-             <!-- end popup -->
+
 
             <v-layout>
               <v-radio-group v-model="courseStatus" row>
@@ -246,8 +245,8 @@
                 this.alt = false;
             },
             quitter: function () {
-                this.$router.push('/createCours')
-            },
+                this.alt = false;
+                },
             onSubmit() {
                 if(this.nameCourse===''|| this.dateStart===''||this.dateEnd===''||this.nbPerson===null||this.selectedCategory===''){
                     this.alt=true;
@@ -268,6 +267,8 @@
                         this.courses = response.data
                         bus.$emit('CourseChanged', this.courses);
                         console.log("course changed", this.courses)
+                        this.nameCourse='';
+                        this.nbPerson=null;
                     })
                 }
             },
@@ -292,9 +293,8 @@
     }
 </script>
 <style>
-    .v-dialog__activator {
-        margin-left: 417%;
-        margin-top: -130%;
+    .v-card.theme--light {
+        overflow: hidden;
     }
 </style>
 
