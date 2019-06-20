@@ -1,7 +1,7 @@
 <template>
     <v-card
             class="mb-5"
-            height="550px">
+            height="700px">
         <v-card-text>
                 <center>
                     <div class="alert alert-error"  v-if="alt">

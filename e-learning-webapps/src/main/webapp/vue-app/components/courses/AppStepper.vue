@@ -11,7 +11,7 @@
                 v-model="e1"
                 flat
                 class="text-xs-center ma-3"
-                height="700px">
+                height="900px">
           <v-stepper-header>
             <v-stepper-step
                     :complete="e1 > 1"

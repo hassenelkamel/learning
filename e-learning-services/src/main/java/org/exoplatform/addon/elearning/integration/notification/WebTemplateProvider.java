@@ -34,7 +34,8 @@ import org.gatein.common.text.EntityEncoder;
 
 @TemplateConfigs(
     templates = {
-        @TemplateConfig( pluginId = AddCoursePlugin.ID, template="war:/notification/templates/web/AddCoursePlugin.gtmpl")
+        @TemplateConfig( pluginId = AddCoursePlugin.ID, template="war:/notification/templates/web/AddCoursePlugin.gtmpl"),
+        @TemplateConfig( pluginId = UpdateCoursePlugin.ID, template="war:/notification/templates/web/UpdateCoursePlugin.gtmpl"),
     }
 )
 
@@ -47,6 +48,7 @@ public class WebTemplateProvider extends TemplateProvider {
   public WebTemplateProvider(InitParams initParams) {
     super(initParams);
     this.templateBuilders.put(PluginKey.key(AddCoursePlugin.ID), new TemplateBuilder());
+    this.templateBuilders.put(PluginKey.key(UpdateCoursePlugin.ID), new TemplateBuilder());
   }
 
   private class TemplateBuilder extends AbstractTemplateBuilder {
@@ -61,14 +63,17 @@ public class WebTemplateProvider extends TemplateProvider {
       String creator = notification.getValueOwnerParameter(NotificationUtils.COURSE_CREATOR);
       String ideaTitle = notification.getValueOwnerParameter(NotificationUtils.COURSE_TITLE);
 
+      Identity identity=null;
+
       EntityEncoder encoder = HTMLEntityEncoder.getInstance();
       IdentityManager identityManager = CommonsUtils.getService(IdentityManager.class);
-      Identity identity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
+      identity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, creator, true);
       Profile profile = identity.getProfile();
       templateContext.put("USER", encoder.encode(profile.getFullName()));
       templateContext.put("AVATAR", profile.getAvatarUrl() != null ? profile.getAvatarUrl() : LinkProvider.PROFILE_DEFAULT_AVATAR_URL);
       templateContext.put("PROFILE_URL", LinkProviderUtils.getRedirectUrl("user", identity.getRemoteId()));
-      templateContext.put("IDEA_TITLE", ideaTitle);
+      templateContext.put("COURSE_TITLE", ideaTitle);
+      templateContext.put("COURSE_CREATOR",creator);
 
       templateContext.put("READ", Boolean.valueOf(notification.getValueOwnerParameter(NotificationMessageUtils.READ_PORPERTY.getKey())) ? "read" : "unread");
       templateContext.put("NOTIFICATION_ID", notification.getId());

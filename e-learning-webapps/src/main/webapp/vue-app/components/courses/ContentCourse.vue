@@ -1,9 +1,11 @@
 <template>
     <div class="team">
-        <v-container class="my-5" elevation-1>
+        <v-container class="my-5">
             <AppEditCoursTab></AppEditCoursTab>
-
-                   <center> <h1 style="color: #476A9C">Cours</h1></center>
+            <center> <h1 style="color: #476A9C">Cours</h1></center>
+            <div v-if="alt" class="alert alert-info">
+                <i class="uiIconInfo"></i>Le cours n'est pas disponible
+            </div>
                 <div v-for="(d,index) in lessons" :key="d.idLesson">
             <v-card height='600px'>
                 <v-toolbar dark color="#3972B1">
@@ -13,13 +15,12 @@
                 <v-card-text>
                     <div class="table-special">
                     <table class="uiGrid table">
-                        <td class="text-content">
                             <tr>
                                 <td><p class="title-content">Description Leçon:</p></td>
-                                <td>{{d.descriptionLesson}}</td></tr>
+                                <td class="text-content">{{d.descriptionLesson}}</td></tr>
                             <tr>
                                 <td><p class="title-content">Contenu Leçon:</p></td>
-                                <td>{{d.contentLesson}}</td>
+                                <td class="text-content">{{d.contentLesson}}</td>
                             </tr>
                             <tr>
                                 <td>
@@ -39,7 +40,6 @@
                                 </center>
                                 </td>
                             </tr>
-                        </td>
                     </table>
                     </div>
                 </v-card-text>
@@ -66,7 +66,6 @@
             }
         },
         mounted(){
-            console.log("effrfrfrff",this.link)
             axios.get('/portal/rest/lesson/getLessonsByIdCourse/'+this.link)
                 .then(response => { this.lessons=response.data;
                     if(this.lessons.length===0){

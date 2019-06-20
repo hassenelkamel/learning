@@ -8,8 +8,8 @@
        String profileUrl = "<a class=\"user-name text-bold\" href=\"javascript:void(0)\">" + USER + "</a>";
       %>
       <div class="contentSmall" data-link="$URL">
-        <div class="status"> $IDEA_CREATOR <%=_ctx.appRes("Notification.message.AddIdeaPlugin", IDEA_TITLE)%></div>
-        <div class="content"><a href="/portal/intranet/Idéation/">show this  Idea</a></div>
+        <div class="status"> $COURSE_CREATOR <%=_ctx.appRes("Notification.message.AddCoursePlugin", COURSE_TITLE)%></div>
+        <div class="content"><a href="/portal/intranet/elearning/">show this  course</a></div>
         <div class="lastUpdatedTime">$LAST_UPDATED_TIME</div>
       </div>
     </div>

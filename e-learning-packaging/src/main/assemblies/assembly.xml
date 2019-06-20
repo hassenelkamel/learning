@@ -15,6 +15,15 @@
       </includes>
       <scope>provided</scope>
       <outputFileNameMapping>exo-elearning.war</outputFileNameMapping>
+    </dependencySet>    <!-- War -->
+    <dependencySet>
+      <useProjectArtifact>false</useProjectArtifact>
+      <outputDirectory>/webapps</outputDirectory>
+      <includes>
+        <include>${project.groupId}:learning-extension:war</include>
+      </includes>
+      <scope>provided</scope>
+      <outputFileNameMapping>learning-extension.war</outputFileNameMapping>
     </dependencySet>
     <!-- Libraries -->
     <dependencySet>

@@ -24,6 +24,13 @@
       <scope>provided</scope>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>learning-extension</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+      <type>war</type>
+    </dependency>
   </dependencies>
   <build>
     <finalName>exo-elearning-addon</finalName>

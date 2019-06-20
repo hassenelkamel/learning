@@ -34,7 +34,8 @@ import org.gatein.common.text.EntityEncoder;
 
 @TemplateConfigs(templates = {
 
-    @TemplateConfig(pluginId = AddCoursePlugin.ID, template = "war:/notification/templates/mail/AddCoursePlugin.gtmpl")
+    @TemplateConfig(pluginId = AddCoursePlugin.ID, template = "war:/notification/templates/mail/AddCoursePlugin.gtmpl"),
+    @TemplateConfig( pluginId = UpdateCoursePlugin.ID, template="war:/notification/templates/mail/UpdateCoursePlugin.gtmpl")
 })
 public class MailTemplateProvider extends TemplateProvider {
   //--- Use a dedicated DateFormatter to handle date pattern coming from underlying levels : Wed Mar 15 01:00:00 CET 2017

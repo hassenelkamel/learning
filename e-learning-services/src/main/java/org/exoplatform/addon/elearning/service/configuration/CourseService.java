@@ -1,6 +1,7 @@
 package org.exoplatform.addon.elearning.service.configuration;
 import org.exoplatform.addon.elearning.entities.CourseEntity;
 import org.exoplatform.addon.elearning.integration.notification.AddCoursePlugin;
+import org.exoplatform.addon.elearning.integration.notification.UpdateCoursePlugin;
 import org.exoplatform.addon.elearning.storage.CourseDao;
 import org.exoplatform.addon.elearning.service.dto.CourseDTO;
 import org.exoplatform.addon.elearning.service.mapper.CourseMapper;
@@ -149,6 +150,9 @@ public class CourseService {
         courseEntity.setNbPerson(courseDTO.getNbPerson());
         courseEntity.setRewardCourse(courseDTO.getRewardCourse());
         courseEntity.setStatus(courseDTO.getStatus());
+        courseDao.update(courseEntity);
+        NotificationContext ctx = NotificationContextImpl.cloneInstance().append(UpdateCoursePlugin.COURSE, courseDTO);
+        ctx.getNotificationExecutor().with(ctx.makeCommand(PluginKey.key(UpdateCoursePlugin.ID))).execute(ctx);
         return courseMapper.courseToCourseDTO(courseEntity);
       }
     }catch(Exception e){
